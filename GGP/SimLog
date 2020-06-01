@@ -1,0 +1,459 @@
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('vertcat')" style="font-weight:bold">vertcat</a>
+Dimensions of arrays being concatenated are not consistent.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 4)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',4,0)">line 4</a>)
+param = [100,0.8,'L-shape','MMC';
+} 
+ar = ['L-shape' 'MNA'];
+ar = ['L-shape', 'MNA'];
+ar = [100,0.8,'L-shape','MMC';
+];
+ar
+
+ar =
+
+    'd L-shapeMMC'
+
+ar = [100,0.8,{'L-shape'},{'MMC'}];
+ar
+
+ar =
+
+  1×4 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {[100]}    {[0.8000]}    {'L-shape'}    {'MMC'}
+
+main
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m', 113)" style="font-weight:bold">parpool</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m',113,0)">line 113</a>)
+Found an interactive session. You cannot have multiple interactive sessions open simultaneously. To terminate the existing session,
+use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 1)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',1,0)">line 1</a>)
+parpool('local',3);
+} 
+delete(gcp('nocreate'))
+Parallel pool using the 'local' profile is shutting down.
+main
+if system_dependent('IsDebugMode')==1, dbquit all; end
+GGP_main(100,param(2,:))
+{Not enough input arguments.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GGP_main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\GGP_main.m', 36)" style="font-weight:bold">GGP_main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\GGP_main.m',36,0)">line 36</a>)
+p.method=method;%MMC%MNA %GP this change the function employed for the evaluation of local volume fraction
+} 
+GGP_main(100,[param(2,:)])
+{Not enough input arguments.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GGP_main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\GGP_main.m', 36)" style="font-weight:bold">GGP_main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\GGP_main.m',36,0)">line 36</a>)
+p.method=method;%MMC%MNA %GP this change the function employed for the evaluation of local volume fraction
+} 
+param(1,:)
+
+ans =
+
+  1×4 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {[100]}    {[0.8000]}    {'L-shape'}    {'MMC'}
+
+single(param(1,1))
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('single')" style="font-weight:bold">single</a>
+Conversion to single from cell is not possible.
+} 
+double(param(1,1))
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('double')" style="font-weight:bold">double</a>
+Conversion to double from cell is not possible.
+} 
+str2double(param(1,1))
+
+ans =
+
+   NaN
+
+str2double(param(1,2))
+
+ans =
+
+   NaN
+
+y= reshape(repmat([100,50,50],12,1),[],1);
+param{1,4)
+ param{1,4)
+          
+{Error: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched
+delimiters.
+} 
+param{1,4}
+
+ans =
+
+    'MMC'
+
+volfrac = repmat(reshape(repmat([0.8 0.5 0.4 0.2],3,1),[],1),3,1);
+cond = reshape(repmat([1 2 3],12,1),[],1);
+mtd = reshape(repmat([1;2;3],1,12),[],1);
+shpn = {'L-shape';'Short_Cantilever';'Compliant'};
+shpn(shp(3))
+{Unrecognized function or variable 'shp'.
+} 
+shp = reshape(repmat([1 2 3],12,1),[],1);
+shpn(shp(6))
+
+ans =
+
+  1×1 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {'L-shape'}
+
+shpn{shp(6)}
+
+ans =
+
+    'L-shape'
+
+clear all
+clc
+y= reshape(repmat([100,50,50],12,1),[],1);
+volfrac = repmat(reshape(repmat([0.8 0.5 0.4 0.2],3,1),[],1),3,1);
+shp = reshape(repmat([1 2 3],12,1),[],1);
+mtd = reshape(repmat([1;2;3],1,12),[],1);
+shpn = {'L-shape';'Short_Cantilever';'Compliant'};
+mtdn = {'MMC';'MNA';'GP'};
+fpar = [y;volfrac;shp;mtd];
+size(fpar,1)
+
+ans =
+
+   144
+
+fpar = [y volfrac shp mtd];
+size(fpar,1)
+
+ans =
+
+    36
+
+temp = fpar(20.:)
+ temp = fpar(20.:)
+                 
+{Error: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched
+delimiters.
+} 
+temp = fpar(20,:); temp(3)
+
+ans =
+
+     2
+
+temp = fpar(21,:); mtd{temp(4)}
+{Brace indexing is not supported for variables of this type.
+} 
+temp = fpar(21,:); mtdn{temp(4)}
+
+ans =
+
+    'GP'
+
+main
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 3).
+
+folder_name =
+
+    'Optimization_history_L-shape_MMC_Volfrac_0.8_nelx_100_nely_100_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_MNA_Volfrac_0.8_nelx_100_nely_100_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_GP_Volfrac_0.8_nelx_100_nely_100_R_0_50_Ngp_2_SC_kktnorm'
+
+ It.:    1 Obj.:2.450e+03 Vol.:  0.169 kktnorm.: 10.001 ch.:  1.000
+ It.:    1 Obj.:3.794e+05 Vol.:  0.038 kktnorm.: 10.001 ch.:  1.000
+ It.:    1 Obj.:4.661e+06 Vol.:  0.039 kktnorm.: 10.001 ch.:  1.000
+ It.:    2 Obj.:2.602e+02 Vol.:  0.323 kktnorm.: 62.642 ch.:  0.149
+ It.:    2 Obj.:3.815e+04 Vol.:  0.084 kktnorm.: 86.661 ch.:  0.168
+ It.:    3 Obj.:1.718e+02 Vol.:  0.360 kktnorm.: 26.500 ch.:  0.109
+ It.:    2 Obj.:4.514e+06 Vol.:  0.059 kktnorm.: 12.869 ch.:  0.060
+ It.:    3 Obj.:1.556e+04 Vol.:  0.128 kktnorm.: 80.435 ch.:  0.180
+ It.:    4 Obj.:1.455e+02 Vol.:  0.371 kktnorm.: 15.468 ch.:  0.085
+ It.:    3 Obj.:4.125e+06 Vol.:  0.082 kktnorm.: 15.259 ch.:  0.069
+ It.:    5 Obj.:1.177e+02 Vol.:  0.382 kktnorm.: 13.268 ch.:  0.064
+ It.:    4 Obj.:8.591e+03 Vol.:  0.168 kktnorm.: 68.842 ch.:  0.164
+ It.:    6 Obj.:1.051e+02 Vol.:  0.393 kktnorm.:  7.350 ch.:  0.049
+ It.:    4 Obj.:3.684e+06 Vol.:  0.103 kktnorm.: 18.072 ch.:  0.074
+ It.:    5 Obj.:5.215e+03 Vol.:  0.205 kktnorm.: 58.455 ch.:  0.149
+ It.:    7 Obj.:1.012e+02 Vol.:  0.394 kktnorm.:  3.832 ch.:  0.044
+ It.:    5 Obj.:3.101e+06 Vol.:  0.126 kktnorm.: 17.887 ch.:  0.073
+ It.:    6 Obj.:3.495e+03 Vol.:  0.240 kktnorm.: 48.989 ch.:  0.134
+ It.:    8 Obj.:9.811e+01 Vol.:  0.395 kktnorm.:  3.704 ch.:  0.035
+ It.:    9 Obj.:9.487e+01 Vol.:  0.398 kktnorm.:  2.586 ch.:  0.034
+ It.:    7 Obj.:2.507e+03 Vol.:  0.272 kktnorm.: 40.235 ch.:  0.131
+ It.:    6 Obj.:2.826e+06 Vol.:  0.152 kktnorm.: 22.411 ch.:  0.078
+ It.:   10 Obj.:9.302e+01 Vol.:  0.398 kktnorm.:  2.205 ch.:  0.029
+ It.:    8 Obj.:1.907e+03 Vol.:  0.302 kktnorm.: 32.086 ch.:  0.125
+ It.:    7 Obj.:2.493e+06 Vol.:  0.180 kktnorm.: 24.756 ch.:  0.083
+ It.:    9 Obj.:1.526e+03 Vol.:  0.329 kktnorm.: 24.747 ch.:  0.118
+ It.:   11 Obj.:9.136e+01 Vol.:  0.399 kktnorm.:  1.898 ch.:  0.027
+ It.:    8 Obj.:2.245e+06 Vol.:  0.208 kktnorm.: 27.998 ch.:  0.086
+ It.:   12 Obj.:9.007e+01 Vol.:  0.399 kktnorm.:  1.563 ch.:  0.026
+ It.:   10 Obj.:1.261e+03 Vol.:  0.351 kktnorm.: 18.009 ch.:  0.109
+ It.:   13 Obj.:8.897e+01 Vol.:  0.399 kktnorm.:  1.410 ch.:  0.024
+ It.:    9 Obj.:2.012e+06 Vol.:  0.238 kktnorm.: 28.673 ch.:  0.091
+ It.:   14 Obj.:8.811e+01 Vol.:  0.399 kktnorm.:  1.180 ch.:  0.028
+ It.:   11 Obj.:1.069e+03 Vol.:  0.371 kktnorm.: 12.330 ch.:  0.097
+ It.:   15 Obj.:8.729e+01 Vol.:  0.399 kktnorm.:  1.188 ch.:  0.027
+ It.:   10 Obj.:1.797e+06 Vol.:  0.267 kktnorm.: 29.573 ch.:  0.095
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('distcomp.remoteparfor/getCompleteIntervals', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m', 374)" style="font-weight:bold">distcomp.remoteparfor/getCompleteIntervals</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m',374,0)">line 374</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 745)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',745,0)">line 745</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 577)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',577,0)">line 577</a>)
+    R = distributed_execution(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 87)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',87,0)">line 87</a>)
+parfor i=[1:size(fpar,1)]
+} 
+Starting parallel pool (parpool) using the 'local' profile ...
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m', 113)" style="font-weight:bold">parpool</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m',113,0)">line 113</a>)
+You requested a minimum of 6 workers, but the cluster "local" has the NumWorkers property set to allow a maximum of 4 workers. To run
+a communicating job on more workers than this (up to a maximum of 512 for the Local cluster), increase the value of the NumWorkers
+property for the cluster. The default value of NumWorkers for a Local cluster is the number of physical cores on the local machine.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 11)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',11,0)">line 11</a>)
+parpool('local',6);
+} 
+main
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 3).
+
+folder_name =
+
+    'Optimization_history_L-shape_MMC_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_MNA_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_GP_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('distcomp.remoteparfor/getCompleteIntervals', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m', 374)" style="font-weight:bold">distcomp.remoteparfor/getCompleteIntervals</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m',374,0)">line 374</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 745)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',745,0)">line 745</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 577)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',577,0)">line 577</a>)
+    R = distributed_execution(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 12)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',12,0)">line 12</a>)
+parfor i=[1:18]
+} 
+main
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m', 113)" style="font-weight:bold">parpool</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\cluster\parpool.m',113,0)">line 113</a>)
+Found an interactive session. You cannot have multiple interactive sessions open simultaneously. To terminate the existing session,
+use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 11)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',11,0)">line 11</a>)
+parpool('local',3);
+} 
+main
+
+folder_name =
+
+    'Optimization_history_L-shape_MMC_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_MNA_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+
+folder_name =
+
+    'Optimization_history_L-shape_GP_Volfrac_0_80_nelx_100_nely_100_ncx&y_2_R_0_50_Ngp_2_SC_kktnorm'
+
+Warning: Directory already exists.
+> In GGP_main (line 68)
+  In parallel_function>make_general_channel/channel_general (line 852)
+  In remoteParallelFunction (line 46)
+ It.:    1 Obj.:1.744e+04 Vol.:  0.097 kktnorm.: 10.001 ch.:  1.000
+Warning: Directory already exists.
+> In GGP_main (line 68)
+  In parallel_function>make_general_channel/channel_general (line 852)
+  In remoteParallelFunction (line 46)
+ It.:    1 Obj.:4.671e+06 Vol.:  0.029 kktnorm.: 10.001 ch.:  1.000
+Warning: Directory already exists.
+> In GGP_main (line 68)
+  In parallel_function>make_general_channel/channel_general (line 852)
+  In remoteParallelFunction (line 46)
+ It.:    1 Obj.:7.169e+06 Vol.:  0.028 kktnorm.: 10.001 ch.:  1.000
+ It.:    2 Obj.:2.437e+04 Vol.:  0.067 kktnorm.:6042133.081 ch.:  0.098
+ It.:    2 Obj.:6.439e+06 Vol.:  0.019 kktnorm.: 74.787 ch.:  0.085
+ It.:    3 Obj.:2.236e+04 Vol.:  0.065 kktnorm.:1235629.271 ch.:  0.084
+ It.:    2 Obj.:4.710e+06 Vol.:  0.016 kktnorm.: 77.067 ch.:  0.074
+ It.:    3 Obj.:3.700e+06 Vol.:  0.013 kktnorm.:228.511 ch.:  0.069
+ It.:    4 Obj.:2.266e+04 Vol.:  0.063 kktnorm.:4724070.150 ch.:  0.064
+ It.:    5 Obj.:2.312e+04 Vol.:  0.060 kktnorm.:1604181.404 ch.:  0.052
+ It.:    3 Obj.:4.692e+06 Vol.:  0.016 kktnorm.:  0.685 ch.:  0.057
+ It.:    4 Obj.:6.250e+06 Vol.:  0.014 kktnorm.: 32.003 ch.:  0.058
+ It.:    6 Obj.:2.417e+04 Vol.:  0.060 kktnorm.:1857666.355 ch.:  0.051
+ It.:    4 Obj.:4.661e+06 Vol.:  0.015 kktnorm.:  0.796 ch.:  0.053
+ It.:    5 Obj.:5.993e+06 Vol.:  0.014 kktnorm.: 78.562 ch.:  0.053
+ It.:    7 Obj.:2.476e+04 Vol.:  0.059 kktnorm.:3340711.909 ch.:  0.049
+ It.:    5 Obj.:4.563e+06 Vol.:  0.015 kktnorm.:  5.214 ch.:  0.046
+ It.:    6 Obj.:4.527e+06 Vol.:  0.015 kktnorm.: 12.626 ch.:  0.048
+ It.:    8 Obj.:2.387e+04 Vol.:  0.056 kktnorm.:2325549.305 ch.:  0.053
+ It.:    7 Obj.:1.188e+06 Vol.:  0.015 kktnorm.: 63.800 ch.:  0.047
+ It.:    9 Obj.:2.657e+04 Vol.:  0.053 kktnorm.:3274288.112 ch.:  0.048
+ It.:    6 Obj.:4.294e+06 Vol.:  0.015 kktnorm.:  5.563 ch.:  0.044
+ It.:    8 Obj.:4.114e+06 Vol.:  0.016 kktnorm.: 47.475 ch.:  0.042
+ It.:   10 Obj.:2.793e+04 Vol.:  0.051 kktnorm.:3241736.527 ch.:  0.043
+ It.:    7 Obj.:3.295e+06 Vol.:  0.015 kktnorm.: 10.345 ch.:  0.045
+ It.:    9 Obj.:1.319e+06 Vol.:  0.015 kktnorm.:  7.543 ch.:  0.042
+ It.:   10 Obj.:6.433e+05 Vol.:  0.016 kktnorm.:534.794 ch.:  0.039
+ It.:    8 Obj.:2.994e+06 Vol.:  0.015 kktnorm.: 14.197 ch.:  0.051
+ It.:   11 Obj.:2.526e+04 Vol.:  0.051 kktnorm.:2805751.567 ch.:  0.042
+ It.:    9 Obj.:2.881e+06 Vol.:  0.016 kktnorm.: 15.167 ch.:  0.044
+ It.:   12 Obj.:2.647e+04 Vol.:  0.050 kktnorm.:3201277.616 ch.:  0.043
+ It.:   10 Obj.:2.804e+06 Vol.:  0.016 kktnorm.:  6.309 ch.:  0.038
+ It.:   11 Obj.:6.215e+05 Vol.:  0.016 kktnorm.: 28.969 ch.:  0.036
+ It.:   13 Obj.:2.718e+04 Vol.:  0.048 kktnorm.:2836422.819 ch.:  0.042
+ It.:   12 Obj.:6.136e+05 Vol.:  0.016 kktnorm.: 34.780 ch.:  0.034
+ It.:   14 Obj.:2.692e+04 Vol.:  0.047 kktnorm.:1761938.931 ch.:  0.042
+ It.:   13 Obj.:5.860e+05 Vol.:  0.016 kktnorm.:100.678 ch.:  0.032
+ It.:   11 Obj.:2.769e+06 Vol.:  0.016 kktnorm.:  4.161 ch.:  0.036
+ It.:   15 Obj.:2.784e+04 Vol.:  0.047 kktnorm.:1947039.108 ch.:  0.040
+ It.:   14 Obj.:4.431e+05 Vol.:  0.016 kktnorm.: 32.432 ch.:  0.033
+ It.:   16 Obj.:2.784e+04 Vol.:  0.046 kktnorm.:1035892.002 ch.:  0.040
+ It.:   12 Obj.:2.736e+06 Vol.:  0.016 kktnorm.:  3.416 ch.:  0.035
+ It.:   15 Obj.:3.953e+05 Vol.:  0.016 kktnorm.: 34.005 ch.:  0.033
+ It.:   17 Obj.:2.830e+04 Vol.:  0.045 kktnorm.:1268229.744 ch.:  0.039
+ It.:   13 Obj.:2.709e+06 Vol.:  0.016 kktnorm.:  3.509 ch.:  0.032
+ It.:   16 Obj.:3.965e+05 Vol.:  0.016 kktnorm.: 32.371 ch.:  0.032
+ It.:   18 Obj.:2.866e+04 Vol.:  0.045 kktnorm.:868038.874 ch.:  0.039
+ It.:   14 Obj.:2.686e+06 Vol.:  0.016 kktnorm.:  2.827 ch.:  0.033
+ It.:   17 Obj.:3.831e+05 Vol.:  0.016 kktnorm.: 19.590 ch.:  0.031
+ It.:   19 Obj.:2.978e+04 Vol.:  0.044 kktnorm.:185738.982 ch.:  0.034
+ It.:   18 Obj.:3.678e+05 Vol.:  0.016 kktnorm.: 20.610 ch.:  0.032
+ It.:   15 Obj.:2.667e+06 Vol.:  0.016 kktnorm.:  2.263 ch.:  0.036
+ It.:   20 Obj.:3.007e+04 Vol.:  0.044 kktnorm.:686088.025 ch.:  0.044
+ It.:   16 Obj.:2.651e+06 Vol.:  0.016 kktnorm.:  1.882 ch.:  0.036
+ It.:   19 Obj.:3.511e+05 Vol.:  0.016 kktnorm.: 18.745 ch.:  0.030
+ It.:   20 Obj.:3.282e+05 Vol.:  0.016 kktnorm.: 21.653 ch.:  0.030
+ It.:   17 Obj.:2.635e+06 Vol.:  0.016 kktnorm.:  1.790 ch.:  0.037
+ It.:   21 Obj.:3.018e+04 Vol.:  0.043 kktnorm.:1640041.899 ch.:  0.042
+ It.:   18 Obj.:2.620e+06 Vol.:  0.016 kktnorm.:  1.795 ch.:  0.038
+ It.:   22 Obj.:3.062e+04 Vol.:  0.042 kktnorm.:114847.342 ch.:  0.035
+ It.:   21 Obj.:3.094e+05 Vol.:  0.016 kktnorm.: 18.093 ch.:  0.030
+ It.:   23 Obj.:3.131e+04 Vol.:  0.041 kktnorm.:743612.361 ch.:  0.041
+ It.:   19 Obj.:2.603e+06 Vol.:  0.016 kktnorm.:  1.832 ch.:  0.039
+ It.:   22 Obj.:2.882e+05 Vol.:  0.016 kktnorm.: 17.755 ch.:  0.030
+ It.:   20 Obj.:2.583e+06 Vol.:  0.016 kktnorm.:  1.832 ch.:  0.040
+ It.:   24 Obj.:3.369e+04 Vol.:  0.040 kktnorm.:730824.593 ch.:  0.038
+ It.:   23 Obj.:2.724e+05 Vol.:  0.016 kktnorm.: 18.035 ch.:  0.032
+ It.:   25 Obj.:3.429e+04 Vol.:  0.039 kktnorm.:93696.699 ch.:  0.031
+ It.:   24 Obj.:2.552e+05 Vol.:  0.016 kktnorm.: 15.048 ch.:  0.031
+ It.:   26 Obj.:3.571e+04 Vol.:  0.038 kktnorm.:1269012.000 ch.:  0.038
+ It.:   21 Obj.:2.556e+06 Vol.:  0.016 kktnorm.:  3.375 ch.:  0.041
+ It.:   25 Obj.:2.437e+05 Vol.:  0.016 kktnorm.: 16.287 ch.:  0.031
+ It.:   27 Obj.:3.616e+04 Vol.:  0.037 kktnorm.:483284.449 ch.:  0.038
+ It.:   22 Obj.:2.535e+06 Vol.:  0.016 kktnorm.:  3.122 ch.:  0.041
+ It.:   26 Obj.:2.295e+05 Vol.:  0.016 kktnorm.: 18.470 ch.:  0.031
+ It.:   28 Obj.:3.706e+04 Vol.:  0.036 kktnorm.:693988.564 ch.:  0.038
+ It.:   27 Obj.:2.132e+05 Vol.:  0.016 kktnorm.: 19.800 ch.:  0.031
+ It.:   23 Obj.:2.512e+06 Vol.:  0.016 kktnorm.:  2.564 ch.:  0.041
+ It.:   29 Obj.:3.741e+04 Vol.:  0.035 kktnorm.:106294.984 ch.:  0.033
+ It.:   28 Obj.:1.977e+05 Vol.:  0.016 kktnorm.: 23.168 ch.:  0.031
+ It.:   30 Obj.:3.796e+04 Vol.:  0.034 kktnorm.:74391.379 ch.:  0.034
+ It.:   24 Obj.:2.495e+06 Vol.:  0.016 kktnorm.:  1.614 ch.:  0.041
+ It.:   29 Obj.:1.831e+05 Vol.:  0.016 kktnorm.: 26.724 ch.:  0.031
+ It.:   25 Obj.:2.471e+06 Vol.:  0.016 kktnorm.:  2.076 ch.:  0.044
+ It.:   30 Obj.:1.779e+05 Vol.:  0.016 kktnorm.: 35.249 ch.:  0.034
+ It.:   26 Obj.:2.453e+06 Vol.:  0.016 kktnorm.:  2.236 ch.:  0.044
+ It.:   31 Obj.:3.882e+04 Vol.:  0.033 kktnorm.:875681.151 ch.:  0.042
+ It.:   32 Obj.:3.929e+04 Vol.:  0.032 kktnorm.:530293.733 ch.:  0.039
+ It.:   27 Obj.:2.440e+06 Vol.:  0.016 kktnorm.:  1.984 ch.:  0.042
+ It.:   31 Obj.:1.708e+05 Vol.:  0.016 kktnorm.: 21.073 ch.:  0.031
+ It.:   33 Obj.:4.011e+04 Vol.:  0.031 kktnorm.:797015.005 ch.:  0.039
+ It.:   28 Obj.:2.424e+06 Vol.:  0.016 kktnorm.:  2.816 ch.:  0.043
+ It.:   32 Obj.:1.629e+05 Vol.:  0.016 kktnorm.: 17.908 ch.:  0.031
+ It.:   34 Obj.:4.048e+04 Vol.:  0.030 kktnorm.:113959.921 ch.:  0.036
+ It.:   29 Obj.:2.411e+06 Vol.:  0.016 kktnorm.:  2.088 ch.:  0.044
+ It.:   33 Obj.:1.577e+05 Vol.:  0.016 kktnorm.: 17.575 ch.:  0.030
+ It.:   35 Obj.:4.122e+04 Vol.:  0.028 kktnorm.:553116.988 ch.:  0.039
+ It.:   30 Obj.:2.401e+06 Vol.:  0.016 kktnorm.:  1.584 ch.:  0.042
+ It.:   34 Obj.:1.529e+05 Vol.:  0.016 kktnorm.: 15.064 ch.:  0.031
+ It.:   36 Obj.:4.180e+04 Vol.:  0.027 kktnorm.:457644.971 ch.:  0.039
+ It.:   35 Obj.:1.485e+05 Vol.:  0.016 kktnorm.: 14.282 ch.:  0.031
+ It.:   37 Obj.:4.247e+04 Vol.:  0.026 kktnorm.:623305.829 ch.:  0.039
+ It.:   36 Obj.:1.447e+05 Vol.:  0.016 kktnorm.: 23.660 ch.:  0.029
+ It.:   38 Obj.:4.295e+04 Vol.:  0.025 kktnorm.:126326.415 ch.:  0.037
+ It.:   31 Obj.:2.392e+06 Vol.:  0.016 kktnorm.:  1.502 ch.:  0.043
+ It.:   37 Obj.:1.406e+05 Vol.:  0.016 kktnorm.: 14.477 ch.:  0.029
+ It.:   39 Obj.:4.347e+04 Vol.:  0.024 kktnorm.:459307.195 ch.:  0.039
+ It.:   32 Obj.:2.382e+06 Vol.:  0.016 kktnorm.:  1.250 ch.:  0.043
+ It.:   38 Obj.:1.392e+05 Vol.:  0.016 kktnorm.: 17.937 ch.:  0.029
+ It.:   40 Obj.:4.420e+04 Vol.:  0.022 kktnorm.:637498.153 ch.:  0.039
+ It.:   33 Obj.:2.373e+06 Vol.:  0.016 kktnorm.:  1.664 ch.:  0.046
+ It.:   39 Obj.:1.329e+05 Vol.:  0.016 kktnorm.: 15.356 ch.:  0.030
+ It.:   40 Obj.:1.284e+05 Vol.:  0.016 kktnorm.: 14.680 ch.:  0.030
+ It.:   34 Obj.:2.366e+06 Vol.:  0.016 kktnorm.:  0.997 ch.:  0.046
+ It.:   41 Obj.:4.464e+04 Vol.:  0.021 kktnorm.:320917.689 ch.:  0.039
+ It.:   35 Obj.:2.361e+06 Vol.:  0.016 kktnorm.:  1.172 ch.:  0.046
+ It.:   36 Obj.:2.355e+06 Vol.:  0.016 kktnorm.:  1.011 ch.:  0.044
+ It.:   42 Obj.:4.538e+04 Vol.:  0.020 kktnorm.:603718.534 ch.:  0.039
+ It.:   41 Obj.:1.246e+05 Vol.:  0.016 kktnorm.: 16.532 ch.:  0.030
+ It.:   43 Obj.:4.576e+04 Vol.:  0.019 kktnorm.:278085.220 ch.:  0.039
+ It.:   37 Obj.:2.350e+06 Vol.:  0.016 kktnorm.:  1.008 ch.:  0.044
+ It.:   42 Obj.:1.199e+05 Vol.:  0.016 kktnorm.: 15.519 ch.:  0.030
+ It.:   44 Obj.:4.651e+04 Vol.:  0.018 kktnorm.:935647.894 ch.:  0.039
+ It.:   38 Obj.:2.345e+06 Vol.:  0.016 kktnorm.:  1.708 ch.:  0.044
+ It.:   43 Obj.:1.145e+05 Vol.:  0.016 kktnorm.: 16.172 ch.:  0.030
+ It.:   45 Obj.:4.703e+04 Vol.:  0.016 kktnorm.:319442.505 ch.:  0.039
+ It.:   39 Obj.:2.341e+06 Vol.:  0.016 kktnorm.:  1.132 ch.:  0.043
+ It.:   44 Obj.:1.104e+05 Vol.:  0.016 kktnorm.: 14.452 ch.:  0.031
+ It.:   46 Obj.:4.692e+04 Vol.:  0.016 kktnorm.:  3.113 ch.:  0.023
+ It.:   40 Obj.:2.336e+06 Vol.:  0.016 kktnorm.:  1.372 ch.:  0.043
+ It.:   45 Obj.:1.059e+05 Vol.:  0.016 kktnorm.: 15.082 ch.:  0.032
+ It.:   47 Obj.:4.480e+04 Vol.:  0.016 kktnorm.: 32.187 ch.:  0.027
+ It.:   46 Obj.:9.988e+04 Vol.:  0.016 kktnorm.: 22.656 ch.:  0.034
+ It.:   48 Obj.:4.431e+04 Vol.:  0.016 kktnorm.: 11.563 ch.:  0.024
+ It.:   47 Obj.:9.434e+04 Vol.:  0.016 kktnorm.: 19.303 ch.:  0.031
+ It.:   49 Obj.:4.415e+04 Vol.:  0.016 kktnorm.:  5.030 ch.:  0.017
+ It.:   50 Obj.:4.387e+04 Vol.:  0.016 kktnorm.:  2.139 ch.:  0.018
+ It.:   41 Obj.:2.333e+06 Vol.:  0.016 kktnorm.:  1.816 ch.:  0.043
+ It.:   48 Obj.:9.084e+04 Vol.:  0.016 kktnorm.: 17.288 ch.:  0.032
+ It.:   49 Obj.:8.829e+04 Vol.:  0.016 kktnorm.: 12.418 ch.:  0.031
+ It.:   42 Obj.:2.329e+06 Vol.:  0.016 kktnorm.:  1.183 ch.:  0.043
+ It.:   50 Obj.:8.595e+04 Vol.:  0.016 kktnorm.: 11.652 ch.:  0.031
+ It.:   43 Obj.:2.325e+06 Vol.:  0.016 kktnorm.:  1.549 ch.:  0.043
+ It.:   51 Obj.:4.328e+04 Vol.:  0.016 kktnorm.:  4.994 ch.:  0.017
+ It.:   52 Obj.:4.299e+04 Vol.:  0.016 kktnorm.:  2.679 ch.:  0.014
+ It.:   44 Obj.:2.322e+06 Vol.:  0.016 kktnorm.:  1.523 ch.:  0.043
+ It.:   53 Obj.:4.250e+04 Vol.:  0.016 kktnorm.:  4.768 ch.:  0.015
+ It.:   45 Obj.:2.318e+06 Vol.:  0.016 kktnorm.:  1.092 ch.:  0.043
+ It.:   51 Obj.:8.382e+04 Vol.:  0.016 kktnorm.:  9.041 ch.:  0.032
+ It.:   54 Obj.:4.240e+04 Vol.:  0.016 kktnorm.:  4.101 ch.:  0.014
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('distcomp.remoteparfor/getCompleteIntervals', 'C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m', 374)" style="font-weight:bold">distcomp.remoteparfor/getCompleteIntervals</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m',374,0)">line 374</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 745)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',745,0)">line 745</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m', 577)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019b\toolbox\matlab\lang\parallel_function.m',577,0)">line 577</a>)
+    R = distributed_execution(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('main', 'D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m', 12)" style="font-weight:bold">main</a> (<a href="matlab: opentoline('D:\Projects\HOmeBOX\Documents\Benchmarking\GGP-Matlab-master\main.m',12,0)">line 12</a>)
+parfor i=[1:18]
+} 
+Parallel pool using the 'local' profile is shutting down.
