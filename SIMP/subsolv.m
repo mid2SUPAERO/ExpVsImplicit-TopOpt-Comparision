@@ -1,29 +1,10 @@
 %-------------------------------------------------------------
-%
-%    Copyright (C) 2006 Krister Svanberg
-%
-%    This file, subsolv.m, is part of GCMMA-MMA-code.
-%    
-%    GCMMA-MMA-code is free software; you can redistribute it and/or
-%    modify it under the terms of the GNU General Public License as 
-%    published by the Free Software Foundation; either version 3 of 
-%    the License, or (at your option) any later version.
-%    
-%    This code is distributed in the hope that it will be useful,
-%    but WITHOUT ANY WARRANTY; without even the implied warranty of
-%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%    GNU General Public License for more details.
-%    
-%    You should have received a copy of the GNU General Public License
-%    (file COPYING) along with this file.  If not, see 
-%    <http://www.gnu.org/licenses/>.
-%    
-%    You should have received a file README along with this file,
-%    containing contact information.  If not, see
-%    <http://www.smoptit.se/> or e-mail mmainfo@smoptit.se or krille@math.kth.se.
+%    This is the file subsolv.m
 %
 %    Version Dec 2006.
-%
+%    Krister Svanberg <krille@math.kth.se>
+%    Department of Mathematics, KTH,
+%    SE-10044 Stockholm, Sweden.
 %
 function [xmma,ymma,zmma,lamma,xsimma,etamma,mumma,zetmma,smma] = ...
 subsolv(m,n,epsimin,low,upp,alfa,beta,p0,q0,P,Q,a0,a,b,c,d);
@@ -84,7 +65,7 @@ while epsi > epsimin
   residunorm = sqrt(residu'*residu);
   residumax = max(abs(residu));
   ittt = 0;
-  while residumax > 0.9*epsi & ittt < 200
+  while residumax > 0.9*epsi & ittt < 500
     ittt=ittt + 1;
     itera=itera + 1;
     ux1 = upp-x;
@@ -213,8 +194,8 @@ while epsi > epsimin
   steg = 2*steg;
   end
   if ittt > 198
-    epsi
-    ittt
+    epsi;
+    ittt;
   end
 epsi = 0.1*epsi;
 end

@@ -1,5 +1,5 @@
 %%%% AN 88 LINE TOPOLOGY OPTIMIZATION CODE Nov, 2010 %%%%
-function top88_MMA(nelx,nely,volfrac,penal,rmin,ft,BC)
+function top88_MMA(nelx,nely,volfrac,penal,rmin,ft)
 %% MATERIAL PROPERTIES
 E0 = 1;
 Emin = 1e-9;
@@ -18,9 +18,9 @@ edofMat = repmat(edofVec,1,8)+repmat([0 1 2*nely+[2 3 0 1] -2 -1],nelx*nely,1);
 iK = reshape(kron(edofMat,ones(8,1))',64*nelx*nely,1);
 jK = reshape(kron(edofMat,ones(1,8))',64*nelx*nely,1);
 %% DEFINE LOADS AND SUPPORTS (HALF MBB-BEAM)
-% BC = 'Short_Cantilever';
+BC = 'Compliant';
 stopping_criteria = 'kktnorm';
-U = sparse(ndof,1);
+U = zeros(ndof,1);
 emptyelts = [];
 fullelts = [];
 mult = 1;       % Multiplier for volfrac in case of emptyelts
@@ -43,11 +43,11 @@ switch BC
     case 'Compliant'
         in = 1; out = 2*(nely+1)*nelx+1;
         F = sparse([in;out],[1;2],[1; -1],ndof,2);
-        U = sparse(ndof,2);
+        U = zeros(ndof,2);
         fixedx = [2:2*(nely+1):ndof]';
         fixeddofs = union(fixedx,[2*(nely+1);2*(nely+1)-1]);
     otherwise
-        error('BC string should be a valid entry: ''MBB'',''L_shape'',''Short_Cantilever''')
+        error('BC string should be a valid entry: ''MBB'',''L-Shape'',''Short_Cantilever''')
 end
 
 alldofs = [1:ndof]';
@@ -55,10 +55,9 @@ freedofs = setdiff(alldofs,fixeddofs);
 %% Generate a *folder* and a prefix to save images *optimization history*:
 
 rs=replace(num2str(rmin,'%3.2f'),'.','_');
-vf = replace(num2str(volfrac,'%3.2f'),'.','_');
-folder_name=['Optimization_history_',BC,'_SIMP_','Volfrac_',vf,'_nelx_',num2str(nelx),...
-    '_nely_',num2str(nely),'_R_',rs,'_SC_',stopping_criteria];
-image_prefix=[BC,'_SIMP_','Volfrac_',vf,'_nelx_',num2str(nelx),'nely_',num2str(nely),'_R_',rs];
+folder_name=['Optimization_history_',BC,'_SIMP_','nelx_',num2str(nelx),...
+    '_nely_',num2str(nely),'_R_',rs];
+image_prefix=[BC,'_nelx_',num2str(nelx),'nely_',num2str(nely),'_R_',rs];
 mkdir(folder_name)
 Path=[folder_name,'/'];
 %% PREPARE FILTER
@@ -85,6 +84,7 @@ Hs = sum(H,2);
 %% INITIALIZE ITERATION
 volfrac = mult*volfrac;
 x = repmat(volfrac,nely,nelx);
+% load x.mat;
 xPhys = x;
 iter = 0;
 outeriter = 0;
@@ -104,16 +104,9 @@ maxoutit = 2000;
 kkttol  = 0.0001;
 changetol = 0.001;
 kktnorm = kkttol+10;
+outit = 0;
 change=1;
 stop_cond = 1;
-cvec = zeros(maxoutit,1);
-vvec = cvec;
-kvec = cvec;
-figure(1); colormap(gray); imagesc(1-xPhys); caxis([0 1]); axis equal; axis off; drawnow;
-print([Path,'density_000'],'-dpng');
-jump = 5;
-%% Write logs in file for tracking in case of HPC
-f1 = fopen([image_prefix,'.txt'],'a+');
 %% START ITERATION
 while stop_cond
   iter = iter + 1;
@@ -147,8 +140,6 @@ while stop_cond
     dc(:) = H*(dc(:)./Hs);
     dv(:) = H*(dv(:)./Hs);
   end
-  cvec(iter) = c;
-  vvec(iter) = mean(xPhys(:));
   %% MMA UPDATE OF DESIGN VARIABLES AND PHYSICAL DENSITIES
   xval = x(:);
   f0val = c*5;
@@ -172,68 +163,20 @@ while stop_cond
   % update the stopping criterion
     switch stopping_criteria
         case 'kktnorm'
-            stop_cond = (iter < maxoutit && kktnorm>kkttol);
-            kvec(iter) = kktnorm;
+            stop_cond=outit < maxoutit && kktnorm>kkttol;
         case 'change'
-            stop_cond = (iter < maxoutit && change>changetol);
-            kvec(iter) = change;
+            stop_cond=outit < maxoutit && change>changetol;
     end
   %% PRINT RESULTS
-  fprintf(f1,' It.:%5i Obj.:%11.4f Vol.:%7.3f ch.:%7.3f kktnrom: %7.4f\n',iter,full(c),mean(xPhys(:)),change,kktnorm);
+  fprintf(' It.:%5i Obj.:%11.4f Vol.:%7.3f ch.:%7.3f\n',iter,c, ...
+    mean(xPhys(:)),change);
   %% PLOT DENSITIES
-  if iter < 101
-      jump = 5;
-  else
-      jump = 20;
-  end
-  figure(1);
   colormap(gray); imagesc(1-xPhys); caxis([0 1]); axis equal; axis off; drawnow;
-  if or(mod(iter,jump) == 0,iter == 1)
-      print([Path,'density_',num2str(iter,'%03d')],'-dpng');
-      if iter > 20
-          figure(2)
-          subplot(2,1,1)
-          plot(20:iter,cvec(20:iter),'bo','MarkerFaceColor','b')
-          grid on
-%           hold on
-%           scatter(iter,c,'k','fill')
-%           hold off
-          text(iter,c,['C =',num2str(c,'%4.2f'),' at iteration ', num2str(iter)],...
-            'VerticalAlignment','bottom','HorizontalAlignment','right','FontSize',24,'FontWeight','bold')
-          xlabel('iter')
-          ylabel('C')
-          subplot(2,1,2)
-          plot(20:iter,vvec(20:iter)*100,'ro','MarkerFaceColor','r')
-          grid on
-%           hold on
-%           scatter(iter,mean(xPhys(:))*100,'k','fill')
-%           hold off
-          text(iter,mean(xPhys(:))*100,['V = ',num2str(mean(xPhys(:))*100,'%4.2f'),'% at iteration ', num2str(iter)],...
-          'VerticalAlignment','bottom','HorizontalAlignment','right','FontSize',24,'FontWeight','bold')
-          xlabel('iter')
-          ylabel('V [%]')
-          print([Path,image_prefix,'_convergence'],'-dpng')
-          % KKT PLOT
-          figure(3)
-          plot(20:iter,kvec(20:iter),'bo','MarkerFaceColor','b');
-          grid on;
-%           hold on;
-%           scatter(iter,c,'k','fill')
-%           hold off
-          xlabel('iter')
-          switch stopping_criteria
-          case 'kktnorm'
-              ylabel('kktnorm')
-              print([Path,image_prefix,'_kktnorm'],'-dpng')
-          case 'change'
-              ylabel('change')
-              print([Path,image_prefix,'_change'],'-dpng')
-          end
-      end
+  if or(mod(iter,10) == 0,iter == 1)
+      print([Path,'density_',num2str(iter-1,'%03d')],'-dpng')
   end
 end
-print('-f1',[Path,image_prefix,'Density'],'-dpng');
-fclose(f1);
+print([Path,image_prefix,'Density'],'-dpng');
 end
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

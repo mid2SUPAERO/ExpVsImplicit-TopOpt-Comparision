@@ -1,33 +1,14 @@
-%-------------------------------------------------------------
-%
-%    Copyright (C) 2007, 2008 Krister Svanberg
-%
-%    This file, mmasub.m, is part of GCMMA-MMA-code.
-%    
-%    GCMMA-MMA-code is free software; you can redistribute it and/or
-%    modify it under the terms of the GNU General Public License as 
-%    published by the Free Software Foundation; either version 3 of 
-%    the License, or (at your option) any later version.
-%    
-%    This code is distributed in the hope that it will be useful,
-%    but WITHOUT ANY WARRANTY; without even the implied warranty of
-%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%    GNU General Public License for more details.
-%    
-%    You should have received a copy of the GNU General Public License
-%    (file COPYING) along with this file.  If not, see 
-%    <http://www.gnu.org/licenses/>.
-%    
-%    You should have received a file README along with this file,
-%    containing contact information.  If not, see
-%    <http://www.smoptit.se/> or e-mail mmainfo@smoptit.se or krille@math.kth.se.
-%
-%    Version September 2007 (and a small change August 2008)
-%
+%-------------------------------------------------------
+%    This is the file mmasub.m
 %
 function [xmma,ymma,zmma,lam,xsi,eta,mu,zet,s,low,upp] = ...
 mmasub(m,n,iter,xval,xmin,xmax,xold1,xold2, ...
-f0val,df0dx,fval,dfdx,low,upp,a0,a,c,d);
+f0val,df0dx,fval,dfdx,low,upp,a0,a,c,d)
+%
+%    Version September 2007 (and a small change August 2008)
+%
+%    Krister Svanberg <krille@math.kth.se>
+%    Department of Mathematics, SE-10044 Stockholm, Sweden.
 %
 %    This function mmasub performs one MMA-iteration, aimed at
 %    solving the nonlinear programming problem:
@@ -82,33 +63,40 @@ f0val,df0dx,fval,dfdx,low,upp,a0,a,c,d);
 %  upp   = Column vector with the upper asymptotes, calculated and used
 %          in the current MMA subproblem.
 %
-%epsimin = sqrt(m+n)*10^(-9);
+% epsimin = sqrt(m+n)*10^(-9);
 epsimin = 10^(-7);
-raa0 = 0.00001;
-move = 0.5;
-albefa = 0.1;
+raa0 = 0.0001;
+% raa0 = 0.01;
+% move = 1.0;
+% albefa = 0.4;
+albefa = 0.5;
+% asyinit = 0.1;
 asyinit = 0.5;
 asyincr = 1.2;
-asydecr = 0.7;
+
+% asyincr = 0.8;
+asydecr = 0.4;
 eeen = ones(n,1);
 eeem = ones(m,1);
 zeron = zeros(n,1);
 
 % Calculation of the asymptotes low and upp :
 if iter < 2.5
+    move=0.01;
   low = xval - asyinit*(xmax-xmin);
   upp = xval + asyinit*(xmax-xmin);
 else
+    move=0.01;
   zzz = (xval-xold1).*(xold1-xold2);
   factor = eeen;
   factor(find(zzz > 0)) = asyincr;
   factor(find(zzz < 0)) = asydecr;
   low = xval - factor.*(xold1 - low);
   upp = xval + factor.*(upp - xold1);
-  lowmin = xval - 10*(xmax-xmin);
-  lowmax = xval - 0.01*(xmax-xmin);
-  uppmin = xval + 0.01*(xmax-xmin);
-  uppmax = xval + 10*(xmax-xmin);
+  lowmin = xval - 0.01*(xmax-xmin);
+  lowmax = xval - 0.0001*(xmax-xmin);
+  uppmin = xval + 0.0001*(xmax-xmin);
+  uppmax = xval + 0.01*(xmax-xmin);
   low = max(low,lowmin);
   low = min(low,lowmax);
   upp = min(upp,uppmax);
@@ -143,6 +131,8 @@ p0 = zeron;
 q0 = zeron;
 p0 = max(df0dx,0);
 q0 = max(-df0dx,0);
+%p0(find(df0dx > 0)) = df0dx(find(df0dx > 0));
+%q0(find(df0dx < 0)) = -df0dx(find(df0dx < 0));
 pq0 = 0.001*(p0 + q0) + raa0*xmamiinv;
 p0 = p0 + pq0;
 q0 = q0 + pq0;
@@ -153,12 +143,14 @@ P = sparse(m,n);
 Q = sparse(m,n);
 P = max(dfdx,0);
 Q = max(-dfdx,0);
-PQ = 0.001*(P + Q) + raa0*eeem*xmamiinv';
+%P(find(dfdx > 0)) = dfdx(find(dfdx > 0));
+%Q(find(dfdx < 0)) = -dfdx(find(dfdx < 0));
+PQ = 0.001*(P + Q) + raa0*eeem*xmamiinv.';
 P = P + PQ;
 Q = Q + PQ;
 P = P * spdiags(ux2,0,n,n);
 Q = Q * spdiags(xl2,0,n,n);
-b = P*uxinv + Q*xlinv - fval ;
+b = P*uxinv + Q*xlinv - fval(:) ;
 %
 %%% Solving the subproblem by a primal-dual Newton method
 [xmma,ymma,zmma,lam,xsi,eta,mu,zet,s] = ...
