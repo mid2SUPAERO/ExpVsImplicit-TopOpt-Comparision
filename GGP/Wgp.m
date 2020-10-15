@@ -8,13 +8,15 @@
 %
 function [W,dW_dX,dW_dY,dW_dT,dW_dL,dW_dh]=Wgp(x,y,Xc,p)
 %  Evaluate characteristic function in each Gauss point
+% x,y are the gauss points, Xc is vector of variables, P is struct of
+% parameters
 ii=1:numel(x);
-X=Xc(1:6:end);
-Y=Xc(2:6:end);
-L=Xc(3:6:end);
-h=Xc(4:6:end);
-T=Xc(5:6:end);
-jj=1:numel(X);
+X=Xc(1:6:end); % lateral position
+Y=Xc(2:6:end); % longitudinal position
+L=Xc(3:6:end); % Component length
+h=Xc(4:6:end); % component thickness
+T=Xc(5:6:end); % component angle orientation
+jj=1:numel(X); 
 [I,J]=meshgrid(ii,jj);
 xi=reshape(x(I),size(I));
 yi=reshape(y(I),size(I));

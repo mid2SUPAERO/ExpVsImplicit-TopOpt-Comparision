@@ -29,7 +29,7 @@ function GGP_heat(nelx, nely, volfrac, method)
 %% Problem set-up
 % In this section of the Matlab code we define several *parameters* needed for 
 % the *Generalized Geometry Projection*.
-
+tic
 % GGP parameters
 stopping_criteria='kktnorm'; %stopping criteria of the optimization algorithm either change or KKT norm
 % nelx=100;nely=100; 
@@ -68,29 +68,20 @@ folder_name=['Optimization_history_',BC,'_',p.method,'_Volfrac_',vf,'_nelx_',num
 image_prefix=[BC,'_',p.method,'_Volfrac_',vf,'_nelx_',num2str(nelx),'_nely_',num2str(nely),'_R_',rs,'_Ngp_',num2str(Ngp)];
 mkdir(folder_name)
 Path=[folder_name,'/'];
-%% 
-% Define *Material properties*:
-
-% MATERIAL PROPERTIES
+%% MATERIAL PROPERTIES
 p.E0 = 1;
 p.Emin = 1e-6;
-%% 
-% Prepare *finite element analysis*
+%% PREPARE FINITE ELEMENT ANALYSIS
 
-% PREPARE FINITE ELEMENT ANALYSIS
-% A11 = [12  3 -6 -3;  3 12  3  0; -6  3 12 -3; -3  0 -3 12];
-% A12 = [-6 -3  0  3; -3 -6 -3 -6;  0 -3 -6  3;  3 -6  3 -6];
-% B11 = [-4  3 -2  9;  3 -4 -9  4; -2 -9 -4 -3;  9  4 -3 -4];
-% B12 = [ 2 -3  4 -9; -3  2  9 -2;  4  9  2  3; -9 -2  3  2];
-% KE = 1/(1-nu^2)/24*([A11 A12;A12' A11]+nu*[B11 B12;B12' B11]);
 KE = [2/3 -1/6 -1/3 -1/6; -1/6 2/3 -1/6 -1/3; -1/3 -1/6 2/3 -1/6; -1/6 -1/3 -1/6 2/3];
+nele = nelx*nely;
 ndof = (nely+1)*(nelx+1);
-nodenrs = reshape(1:(1+nelx)*(1+nely),1+nely,1+nelx);
-edofVec = reshape(nodenrs(1:end-1,1:end-1)+1,nelx*nely,1);
+nodenrs = reshape(1:ndof,1+nely,1+nelx);
+edofVec = reshape(nodenrs(1:end-1,1:end-1)+1,nele,1);
 edofMat = repmat(edofVec,1,4)+repmat([0 nely+[1 0] -1],nelx*nely,1);
-iK = reshape(kron(edofMat,ones(4,1))',16*nelx*nely,1);
-jK = reshape(kron(edofMat,ones(1,4))',16*nelx*nely,1);
-U = zeros((nely+1)*(nelx+1),1);
+iK = reshape(kron(edofMat,ones(4,1))',16*nele,1);
+jK = reshape(kron(edofMat,ones(1,4))',16*nele,1);
+U = zeros(ndof,1);
 %define the nodal coordinates
 [Yy,Xx]=find(nodenrs);
 Yy=nely+1-Yy;
@@ -226,7 +217,7 @@ change=1;
 % Prepare plots and quantity storage:
 cvec=zeros(maxoutit,1);
 vvec=cvec;kvec=cvec;
-plot_rate=10;
+plot_rate=5;
 %initialize variables for plot
 tt=0:0.005:(2*pi);tt=repmat(tt,length(Xc),1);
 cc=cos(tt);ss=sin(tt);
@@ -238,8 +229,16 @@ switch stopping_criteria
     case 'change'
         stop_cond=outit < maxoutit &&change>changetol;
 end
-%% Create a file to track iterations in case of HPC
-f1 = fopen([image_prefix,'.txt'],'a+');
+%% Write logs in file for tracking command window outputs
+fname = fullfile(folder_name, image_prefix);
+if exist([fname,'.txt']) == 2
+    f1 = fopen([fname,'.txt'],'at+');
+else
+    f1 = fopen([fname,'.txt'],'wt+');
+end
+if exist([image_prefix,'.mat']) == 2
+        load([image_prefix,'.mat']);
+end
 %% Start the design loop:
 while  stop_cond
     outit   = outit+1;
@@ -339,15 +338,20 @@ while  stop_cond
     dv(6:6:end)=dv_dm;
     % store the output for plot
     cvec(outit)=c;vvec(outit)=v;
+    %% Greyness Level
+    gl = 4/nele*sum(xPhys(:).*(1-xPhys(:)));
     %% PRINT RESULTS
-    fprintf(f1,' It.:%5i Obj.:%4.3e Vol.:%7.3f kktnorm.:%7.3f ch.:%7.3f\n',outit,c, ...
-        mean(xPhys(:)),kktnorm,change);
+    fprintf(f1,' It.:%5i Obj.:%4.3e Vol.:%7.3f kktnorm.:%7.3f ch.:%7.3f GL.: %5.3f\n',outit,c, ...
+        mean(xPhys(:)),kktnorm,change,gl);
     % pass scaled objective and constraint function and sensitivities to MMA
     f0val=log(c+1);
     fval=[(v-volfrac)/volfrac]*100;
     df0dx=(dc(:)/(c+1).*(upper_bound(:)-lower_bound(:)));
     dfdx=[dv(:)'/volfrac]*100.*(upper_bound(:)-lower_bound(:))';
     %plot every plot_rate iterations
+    if outit > 101
+        plot_rate = 20;
+    end
     if or(mod(outit,plot_rate) == 0,outit == 1)
 %     if rem(outit,plot_rate)==0
         %convergence plot
@@ -453,8 +457,10 @@ while  stop_cond
         case 'change'
             stop_cond=outit < maxoutit &&change>changetol;
     end
+    if toc/3600 > 5
+        save([image_prefix,'.mat']);
+    end
 end
-fclose(f1);
 % Make the plot of the solution
 % convergence plot
 figure(3)
@@ -544,4 +550,6 @@ colorbar
 axis([min(Xx),max(Xx),min(Yy),max(Yy)])
 print([Path,'component_',num2str(outit-1,'%03d')],'-dpng')
 hold off
+fprintf(f1,'Elapsed Time: %10.3f',toc);
+fclose(f1);
 end

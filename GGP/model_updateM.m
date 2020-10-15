@@ -21,8 +21,8 @@ switch p.method
         hatdelta=delta.*m.^p.gammac;
         [E,dE_dhatdelta]=Aggregation_Pi(hatdelta,p);
         if p.saturation
-        [E,ds]=smooth_sat(E,p,nc);
-        dE_dhatdelta=ds.*dE_dhatdelta;
+            [E,ds]=smooth_sat(E,p,nc);
+            dE_dhatdelta=ds.*dE_dhatdelta;
         end
         E=E.*p.E0;
         dhatdelta_ddelta=m.^p.gammac;
